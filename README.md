@@ -12,9 +12,11 @@ Learning both Rust and the Roguelike genre.
 
 ## Challenges
 
-`termion` doesn't support Windows, except maybe in an unofficial branch/fork. 
+~~`termion`~~ doesn't support Windows, except maybe in an unofficial branch/fork. 
 
-`rustbox` doesn't build on Windows on the first go. Seems like maybe it could work with a little nudge (relies on `termbox`), but I'm not sure how much time I want to put into it. All in all, a little disappointed with Rust's cross-platform CLI.
+~~`rustbox`~~ doesn't support Windows since it relies on `termbox`.
+
+`crossterm` is fairly complicated for what it does, but _is_ cross-platform.
 
 ----
 
