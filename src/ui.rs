@@ -32,6 +32,7 @@ pub enum Color {
     Yellow,
     Blue,
     White,
+    Unknown,
 }
 
 impl Color {
@@ -70,6 +71,15 @@ impl Buffer {
             self.print_symbol(y, x, c, Color::White, Color::Black);
             x = x + 1;
         }
+    }
+
+    pub fn print_lower_left(&mut self, message: &str) {
+        let mut x = 0;
+        for c in message.chars() {
+            self.print_symbol(self.height - 1, x, c, Color::Black, Color::Yellow);
+            x = x + 1;
+        }
+        self.print_symbol(self.height - 1, x, SPACE, Color::Black, Color::Yellow);
     }
 
     pub fn print_symbol(&mut self, row: usize, col: usize, c: char, fg: Color, bg: Color) {
@@ -140,8 +150,8 @@ impl UI {
 
     pub fn render(&self, buffer: &Buffer) {
         self.cursor.goto(0, 0).expect("couldn't goto(0,0)");
-        let mut fg = Color::Black;
-        let mut bg = Color::Black;
+        let mut fg = Color::Unknown;
+        let mut bg = Color::Unknown;
 
         let mut string_buffer = String::new();
         for cell in buffer.cells.iter() {

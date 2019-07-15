@@ -29,17 +29,32 @@ impl MapBuilder {
         self.map[y][x] = EMPTY;
     }
 
+    pub fn carve_out_rect(&mut self, x: usize, y: usize, width: usize, height: usize) {
+        for row in 0..height {
+            for col in 0..width {
+                self.map[row + x][col + y] = EMPTY;
+            }
+        }
+    }
+
+    pub fn carve_out_line(&mut self, x: usize, y: usize, is_vertical: bool, length: usize) {
+        for current in 0..length {
+            self.map[y + if is_vertical { current } else { 0 }]
+                [x + if is_vertical { 0 } else { current }] = EMPTY;
+        }
+    }
+
     pub fn build(&self) -> Vec<Vec<usize>> {
         self.map.clone()
     }
 }
 
-pub fn new_builder_with_size(width: usize, height: usize) -> MapBuilder {
+pub fn new_builder(width: usize, height: usize, default_value: usize) -> MapBuilder {
     let mut map = Vec::with_capacity(height);
     for _row in 0..height {
         let mut row = Vec::with_capacity(width);
         for _col in 0..width {
-            row.push(0);
+            row.push(default_value);
         }
         map.push(row);
     }
